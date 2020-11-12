@@ -1,4 +1,4 @@
-package payroll;
+package payroll.Manager;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class ManagerController {
+public class ManagerController {
 
     private final ManagerRepository repository;
     private ManagerModelAssembler assembler;
@@ -34,7 +34,6 @@ class ManagerController {
 
     @GetMapping("/Managers")
     CollectionModel<EntityModel<Manager>> all() {
-
         List<EntityModel<Manager>> Managers = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
@@ -45,7 +44,6 @@ class ManagerController {
 
     @PostMapping("/Managers")
     ResponseEntity<?> newManager(@RequestBody Manager newManager) {
-
         EntityModel<Manager> entityModel = assembler.toModel(repository.save(newManager));
 
         return ResponseEntity 

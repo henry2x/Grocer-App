@@ -1,6 +1,6 @@
-package payroll;
+package payroll.Manager;
 
-class ManagerNotFoundException extends RuntimeException {
+public class ManagerNotFoundException extends RuntimeException {
 
 	ManagerNotFoundException(Long id) {
         super("Could not find Manager " + id);

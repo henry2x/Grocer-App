@@ -1,4 +1,4 @@
-package payroll;
+package payroll.Manager;
 
 import java.util.Objects;
 
@@ -9,9 +9,17 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Managers")
-class Manager {
+public class Manager {
 
-    private @Id @GeneratedValue Long id;
+    public int getStoreId() {
+		return storeId;
+	}
+
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
+	}
+
+	private @Id @GeneratedValue Long id;
     private String firstName;
     private String lastName;
     private String role;
@@ -20,7 +28,7 @@ class Manager {
     Manager() {
     }
 
-    Manager(String firstName, String lastName, String role,int storeId) {
+    public Manager(String firstName, String lastName, String role,int storeId) {
 
         this.firstName = firstName;
         this.lastName = lastName;

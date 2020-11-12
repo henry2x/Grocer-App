@@ -1,4 +1,4 @@
-package payroll;
+package payroll.Manager;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
@@ -7,7 +7,7 @@ import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;
 
 @Component
-class ManagerModelAssembler implements RepresentationModelAssembler<Manager, EntityModel<Manager>> {
+public class ManagerModelAssembler implements RepresentationModelAssembler<Manager, EntityModel<Manager>> {
 
     @Override
     public EntityModel<Manager> toModel(Manager Manager) {

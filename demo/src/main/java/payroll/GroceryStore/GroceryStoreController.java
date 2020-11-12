@@ -1,4 +1,4 @@
-package payroll;
+package payroll.GroceryStore;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -35,12 +35,12 @@ class GroceryStoreController {
     @GetMapping("/GroceryStores")
     CollectionModel<EntityModel<GroceryStore>> all() {
 
-        List<EntityModel<GroceryStore>> GroceryStores = repository.findAll()
+        List<EntityModel<GroceryStore>> Managers = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(GroceryStores, linkTo(methodOn(GroceryStoreController.class).all()).withSelfRel());
+        return CollectionModel.of(Managers, linkTo(methodOn(GroceryStoreController.class).all()).withSelfRel());
     }
 
     @PostMapping("/GroceryStores")
@@ -66,13 +66,13 @@ class GroceryStoreController {
     @PutMapping("/GroceryStores/{id}")
     ResponseEntity<?> replaceGroceryStore(@RequestBody GroceryStore newGroceryStore, @PathVariable Long id) {
 
-        GroceryStore updatedGroceryStore = repository.findById(id)
+    	GroceryStore updatedGroceryStore = repository.findById(id)
                 .map(GroceryStore -> {
-                    //GroceryStore.setAddress(newGroceryStore.address);
+                	GroceryStore.setAddress(newGroceryStore.getAddress());
                     return repository.save(GroceryStore);
                 })
                 .orElseGet(() -> {
-                    newGroceryStore.setId(id);
+                	newGroceryStore.setId(id);
                     return repository.save(newGroceryStore);
                 });
         

@@ -1,4 +1,4 @@
-package payroll;
+package payroll.Order;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,9 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
+import payroll.Status;
+
 @Entity
 @Table(name = "CUSTOMER_ORDER")
-class Order {
+public class Order {
     private @Id @GeneratedValue Long id;
 
     private String description;

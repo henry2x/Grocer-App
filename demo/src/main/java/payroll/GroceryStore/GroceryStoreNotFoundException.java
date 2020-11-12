@@ -1,4 +1,4 @@
-package payroll;
+package payroll.GroceryStore;
 
 class GroceryStoreNotFoundException extends RuntimeException {
 
