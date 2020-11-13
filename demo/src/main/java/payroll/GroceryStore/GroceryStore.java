@@ -5,6 +5,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,17 +16,17 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Grocery_Store")
+@Table(name = "GROCERY_STORES")
 @Access(value=AccessType.FIELD)
 public class GroceryStore {
 
-
 	private @Id @GeneratedValue Long id;
-		
+	
+	
+	@Column(name = "Grocery_Store_Name")
 	public String name;
 	
 	@OneToOne(cascade = {CascadeType.ALL})
-	@PrimaryKeyJoinColumn
 	public Address address;
 	
 	

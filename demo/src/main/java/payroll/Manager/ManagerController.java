@@ -67,7 +67,6 @@ public class ManagerController {
         Manager updatedManager = repository.findById(id)
                 .map(Manager -> {
                     Manager.setName(newManager.getName());
-                    Manager.setRole(newManager.getRole());
                     return repository.save(Manager);
                 })
                 .orElseGet(() -> {

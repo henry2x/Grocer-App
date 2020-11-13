@@ -3,23 +3,21 @@ package payroll.GroceryStore;
 import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "GroceryStoreItems")
+@Table(name = "GROCERY_STORE_ITEMS")
 public class Item {
 
 	private @Id @GeneratedValue Long id;
 	
-	@Column(name = "ItemName")
+	@Column(name = "name_item")
 	String name;
 	
 	public GroceryStore getG() {
@@ -30,16 +28,13 @@ public class Item {
 		this.g = g;
 	}
 
-	@Column(name = "Categorynumber")
+	@Column(name = "Category_number")
 	int category;
 	
-	@Column(name = "ExpiryDate")
+	@Column(name = "Expiry_Date")
 	Date expiryDate;
 	
-	public int store_id; 
-	
-	@OneToOne(cascade = {CascadeType.ALL})
-	@PrimaryKeyJoinColumn
+	@ManyToOne
 	private GroceryStore g;
 	
 	
@@ -47,11 +42,10 @@ public class Item {
 	public Item() {
 	}
 
-	public Item(String name, int category, Date expiryDate, int storeid) {
+	public Item(String name, int category, Date expiryDate) {
 		this.name = name;
 		this.category = category;
 		this.expiryDate = expiryDate;
-		this.store_id = storeid;
 	}
 	
 	public Long getId() {
@@ -86,7 +80,7 @@ public class Item {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, expiryDate, g, id, name, store_id);
+		return Objects.hash(category, expiryDate, g, id, name);
 	}
 
 	@Override
@@ -97,13 +91,13 @@ public class Item {
 			return false;
 		Item other = (Item) obj;
 		return category == other.category && Objects.equals(expiryDate, other.expiryDate)
-				&& Objects.equals(id, other.id) && Objects.equals(name, other.name) && store_id == other.store_id;
+				&& Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", category=" + category + ", expiryDate=" + expiryDate
-				+ ", store_id=" + store_id + "]";
+				 + "]";
 	}
 	
 	

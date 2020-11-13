@@ -2,38 +2,51 @@ package payroll.Manager;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import payroll.GroceryStore.GroceryStore;
+
 @Entity
-@Table(name = "Managers")
+@Table(name = "MANAGERS")
 public class Manager {
 
-    public int getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(int storeId) {
-		this.storeId = storeId;
-	}
+	/*
+	 * public int getStoreId() { return storeId; }
+	 * 
+	 * public void setStoreId(int storeId) { this.storeId = storeId; }
+	 */
 
 	private @Id @GeneratedValue Long id;
     private String firstName;
     private String lastName;
-    private String role;
-    private int storeId;
+   // private int storeId;
+    
+    
+    @ManyToOne(cascade = {CascadeType.ALL})
+	private GroceryStore g;
+	
+	public GroceryStore getG() {
+		return g;
+	}
 
+	public void setG(GroceryStore g) {
+		this.g = g;
+	}
     Manager() {
     }
 
-    public Manager(String firstName, String lastName, String role,int storeId) {
+    public Manager(String firstName, String lastName) {
 
         this.firstName = firstName;
         this.lastName = lastName;
-        this.role = role;
-        this.storeId = storeId;
     }
 
     public String getName() {
@@ -58,9 +71,6 @@ public class Manager {
         return this.lastName;
     }
 
-    public String getRole() {
-        return this.role;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -74,29 +84,26 @@ public class Manager {
         this.lastName = lastName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(firstName, id, lastName);
+	}
 
-    @Override
-    public boolean equals(Object o) {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Manager))
+			return false;
+		Manager other = (Manager) obj;
+		return Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName);
+	}
 
-        if (this == o)
-            return true;
-        if (!(o instanceof Manager))
-            return false;
-        Manager manager = (Manager) o;
-        return Objects.equals(this.id, manager.id) && Objects.equals(this.firstName, manager.firstName) && Objects.equals(this.lastName, manager.lastName)
-                && Objects.equals(this.role, manager.role) && Objects.equals(this.storeId, manager.storeId);
-    }
+	@Override
+	public String toString() {
+		return "Manager [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
+				+ "]";
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.firstName, this.lastName, this.role);
-    }
-
-    @Override
-    public String toString() {
-        return "Manager{" + "id=" + this.id + ", firstName='" + this.firstName + '\'' + ", lastName='" + this.lastName + '\'' + ", role='" + this.role + '\'' + '}';
-    }
 }

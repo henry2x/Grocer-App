@@ -14,23 +14,24 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ADDRESS")
-@Access(value=AccessType.FIELD)
+@Table(name = "ADDRESSES")
 public class Address {
 
 
 
 	@Id
-	@GeneratedValue(generator = "gen")
+	@GeneratedValue
 	private long id;
 
-	@Column(name = "AddressLine")
+	@Column(name = "Address_Line")
 	private String addressLine;
 	
-	@Column(name = "PostalCode")
+	@Column(name = "Postal_Code")
 	private String zipcode;
 	
-	
+	@Column(name = "City")
+	private String city;
+
 	public String getAddressLine() {
 		return addressLine;
 	}
@@ -39,22 +40,6 @@ public class Address {
 		this.addressLine = addressLine;
 	}
 	
-
-	public GroceryStore getG() {
-		return g;
-	}
-
-	public void setG(GroceryStore g) {
-		this.g = g;
-	}
-
-
-	@Column(name = "City")
-	private String city;
-
-	@OneToOne(cascade = {CascadeType.ALL})
-	@PrimaryKeyJoinColumn
-	private GroceryStore g;
 
 	public Address() {
 	}
