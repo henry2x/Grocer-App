@@ -3,6 +3,7 @@ package payroll.Order;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,13 +37,15 @@ class OrderController {
     }
 
     @GetMapping("/orders")
-    CollectionModel<EntityModel<Order>> all() {
+    CollectionModel<Order> all() {
 
-        List<EntityModel<Order>> orders = orderRepository.findAll()
+     /*   List<EntityModel<Order>> orders = orderRepository.findAll()
                 .stream() //
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
-
+      */
+    	List<Order> orders = new ArrayList<Order>();
+    	orderRepository.findAll().forEach(p -> orders.add(p));
         return CollectionModel.of(orders, //
                 linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }

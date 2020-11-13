@@ -3,6 +3,7 @@ package payroll.Manager;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,11 +34,10 @@ public class ManagerController {
     // Aggregate root
 
     @GetMapping("/Managers")
-    CollectionModel<EntityModel<Manager>> all() {
-        List<EntityModel<Manager>> Managers = repository.findAll()
-                .stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
+    CollectionModel<Manager> all() {
+        List<Manager> Managers = new ArrayList<Manager>();
+        repository.findAll().forEach(m-> Managers.add(m));
+
 
         return CollectionModel.of(Managers, linkTo(methodOn(ManagerController.class).all()).withSelfRel());
     }

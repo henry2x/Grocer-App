@@ -1,5 +1,7 @@
 package payroll;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +13,7 @@ import payroll.GroceryStore.GroceryStore;
 import payroll.GroceryStore.GroceryStoreRepository;
 import payroll.Manager.Manager;
 import payroll.Manager.ManagerRepository;
+import payroll.Order.Order;
 import payroll.Order.OrderRepository;
 
 @Configuration
@@ -23,32 +26,32 @@ class LoadDatabase {
 			GroceryStoreRepository groceryStoreRepository) {
 
 		return args -> {
-			  Address test = new Address("100 Lawrence", "M3C 1B4", "Toronto");
-			  groceryStoreRepository.deleteAll();
-			  GroceryStore g = new GroceryStore(test);
-			  
-			  groceryStoreRepository.save(g);
-			  System.out.println(g.getId());
-			  Address test2 = new Address("101 Lawrence", "M3C 1B4", "Toronto");
-			  GroceryStore g2 = new GroceryStore(test2);
-			  groceryStoreRepository.save(g2);
-			  
-			  System.out.println(g2.getId());
-			  
-			log.info("Preloading " + ManagerRepository.save(new Manager("Bilbo", "Baggins", "burglar", 1)));
-			log.info("Preloading " + ManagerRepository.save(new Manager("Frodo", "Baggins", "thief", 3)));
+
+			Address test = new Address("100 Lawrence", "M3C 1B4", "Toronto");
+
+			Manager m1 = new Manager("Bilbo", "Baggins", "burglar", 1);
+			Manager m2 = new Manager("Frodo", "Baggins", "thief", 3);
+
+			groceryStoreRepository.save(new GroceryStore(test, "Walmart"));
+
+
+			Address test2 = new Address("101 Lawrence", "M3C 1B4", "Toronto");
+			GroceryStore g2 = new GroceryStore(test2, "Sobeys");
+			groceryStoreRepository.save(g2);
+
+
+			Order o = new Order("MacBook Pro", Status.COMPLETED, new Date());
+			o.setG(g2);
+
+			log.info("Preloading " + ManagerRepository.save(m1));
 
 			ManagerRepository.findAll().forEach(Manager -> log.info("Preloaded " + Manager));
-			
-			  
 
+			orderRepository.save(o); //
 
-			// orderRepository.save(new Order("MacBook Pro", Status.COMPLETED, null));
-			// orderRepository.save(new Order("iPhone", Status.IN_PROGRESS, null));
-
-			// orderRepository.findAll().forEach(order -> {
-			/// log.info("Preloaded " + order);
-			// });
+			orderRepository.findAll().forEach(order -> {
+				log.info("Preloaded " + order);
+			});
 		};
 	}
 }

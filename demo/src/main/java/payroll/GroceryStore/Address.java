@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -22,15 +24,37 @@ public class Address {
 	@GeneratedValue(generator = "gen")
 	private long id;
 
+	@Column(name = "AddressLine")
 	private String addressLine;
-
+	
+	@Column(name = "PostalCode")
 	private String zipcode;
+	
+	
+	public String getAddressLine() {
+		return addressLine;
+	}
 
+	public void setAddressLine(String addressLine) {
+		this.addressLine = addressLine;
+	}
+	
+
+	public GroceryStore getG() {
+		return g;
+	}
+
+	public void setG(GroceryStore g) {
+		this.g = g;
+	}
+
+
+	@Column(name = "City")
 	private String city;
 
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@PrimaryKeyJoinColumn
-	private GroceryStore grocery_store;
+	private GroceryStore g;
 
 	public Address() {
 	}
@@ -72,37 +96,8 @@ public class Address {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-	public GroceryStore getGroceryStore() {
-		return grocery_store;
-	}
-
-	public void setGroceryStore(GroceryStore groceryStore) {
-		this.grocery_store = groceryStore;
-	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(addressLine, city, grocery_store, id, zipcode);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof Address))
-			return false;
-		Address other = (Address) obj;
-		return Objects.equals(addressLine, other.addressLine) && Objects.equals(city, other.city)
-				&& Objects.equals(grocery_store, other.grocery_store) && id == other.id
-				&& Objects.equals(zipcode, other.zipcode);
-	}
-
-	@Override
-	public String toString() {
-		return "Address {id=" + id + ", addressLine=" + addressLine + ", zipcode=" + zipcode + ", city=" + city
-				+ ", grocery_store=" + grocery_store + "}";
-	}
 
 
 }

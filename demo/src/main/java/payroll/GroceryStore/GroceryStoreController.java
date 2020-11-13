@@ -3,6 +3,7 @@ package payroll.GroceryStore;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,14 +34,17 @@ class GroceryStoreController {
     // Aggregate root
 
     @GetMapping("/GroceryStores")
-    CollectionModel<EntityModel<GroceryStore>> all() {
+    CollectionModel<GroceryStore> all() {
 
-        List<EntityModel<GroceryStore>> Managers = repository.findAll()
+    /*    List<EntityModel<GroceryStore>> Managers = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()); */
+    	
+    	List<GroceryStore> groceryStores = new ArrayList<GroceryStore>();
+    	repository.findAll().forEach(g -> groceryStores.add(g));
 
-        return CollectionModel.of(Managers, linkTo(methodOn(GroceryStoreController.class).all()).withSelfRel());
+        return CollectionModel.of(groceryStores, linkTo(methodOn(GroceryStoreController.class).all()).withSelfRel());
     }
 
     @PostMapping("/GroceryStores")
