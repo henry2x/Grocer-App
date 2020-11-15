@@ -31,6 +31,17 @@ class ItemController {
         
     }
 
+    @RequestMapping("/")
+    public String home(Model model) {
+    	model.addAttribute("items", repository.findAll());
+    	return "index";
+    }
+    @PostMapping("/saveItem")
+    public String saveItem(@ModelAttribute("items") Manager item) {
+    	repository.save(item);
+    	return "redirect:/";
+    }
+
     // Aggregate root
 
     @GetMapping("/Items")

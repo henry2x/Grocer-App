@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
+@EnableWebMvc
 class GroceryStoreController {
 
     private final GroceryStoreRepository repository;
@@ -29,6 +30,16 @@ class GroceryStoreController {
         this.repository = repository;
         this.assembler = assembler;
         
+    }
+    @RequestMapping("/")
+    public String home(Model model) {
+    	model.addAttribute("grocerystores", repository.findAll());
+    	return "index";
+    }
+    @PostMapping("/saveGroceryStore")
+    public String saveGroceryStore(@ModelAttribute("grocerystores") Manager store) {
+    	repository.save(store);
+    	return "redirect:/";
     }
 
     // Aggregate root

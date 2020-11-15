@@ -43,9 +43,9 @@ public class ManagerController {
     	return "index";
     }
     
-    @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("manager") Manager user) {
-    	repository.save(user);
+    @PostMapping("/saveManager")
+    public String saveManager(@ModelAttribute("manager") Manager manager) {
+    	repository.save(manager);
     	return "redirect:/";
     }
     // Aggregate root
@@ -58,16 +58,6 @@ public class ManagerController {
 	  return CollectionModel.of(Managers,
 	  linkTo(methodOn(ManagerController.class).all()).withSelfRel()); }
 	 
-    
-    @PostMapping("/Managers")
-    ResponseEntity<?> newManager(@RequestBody Manager newManager) {
-        EntityModel<Manager> entityModel = assembler.toModel(repository.save(newManager));
-
-        return ResponseEntity 
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) 
-                .body(entityModel);
-    }
-
     // Single item
     @GetMapping("/Managers/{id}")
     EntityModel<Manager> one(@PathVariable int id) {
@@ -76,6 +66,15 @@ public class ManagerController {
                 .orElseThrow(() -> new ManagerNotFoundException(id));
 
         return assembler.toModel(Manager);
+    }
+
+    @PostMapping("/Managers")
+    ResponseEntity<?> newManager(@RequestBody Manager newManager) {
+        EntityModel<Manager> entityModel = assembler.toModel(repository.save(newManager));
+
+        return ResponseEntity 
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) 
+                .body(entityModel);
     }
 
     @PutMapping("/Managers/{id}")

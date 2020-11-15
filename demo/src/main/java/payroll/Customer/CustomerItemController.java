@@ -30,6 +30,16 @@ class CustomerItemController {
         
     }
 
+    @RequestMapping("/")
+    public String home(Model model) {
+    	model.addAttribute("customeritem", repository.findAll());
+    	return "index";c
+    }
+    @PostMapping("/saveItem")
+    public String saveItem(@ModelAttribute("customeritem") Manager customeritem) {
+    	repository.save(customeritem);
+    	return "redirect:/";
+    }
     // Aggregate root
 
     @GetMapping("/CustomerItems")
