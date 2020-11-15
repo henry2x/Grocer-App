@@ -1,7 +1,7 @@
 package payroll.Manager;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ManagerRepository extends CrudRepository<Manager, Long> {
+public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
 }

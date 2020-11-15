@@ -37,15 +37,13 @@ class OrderController {
     }
 
     @GetMapping("/orders")
-    CollectionModel<Order> all() {
+    CollectionModel<EntityModel<Order>> all() {
 
-     /*   List<EntityModel<Order>> orders = orderRepository.findAll()
+        List<EntityModel<Order>> orders = orderRepository.findAll()
                 .stream() //
                 .map(assembler::toModel) //
                 .collect(Collectors.toList());
-      */
-    	List<Order> orders = new ArrayList<Order>();
-    	orderRepository.findAll().forEach(p -> orders.add(p));
+
         return CollectionModel.of(orders, //
                 linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }

@@ -5,6 +5,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -32,17 +34,15 @@ class ItemController {
     // Aggregate root
 
     @GetMapping("/Items")
-    CollectionModel<Item> all() {
+    CollectionModel<EntityModel<Item>> all() {
 
-    /*    List<EntityModel<Item>> Managers = repository.findAll()
+        List<EntityModel<Item>> items = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList()); */
+                .collect(Collectors.toList()); 
     	
-    	List<Item> Items = new ArrayList<Item>();
-    	repository.findAll().forEach(g -> Items.add(g));
 
-        return CollectionModel.of(Items, linkTo(methodOn(ItemController.class).all()).withSelfRel());
+        return CollectionModel.of(items, linkTo(methodOn(ItemController.class).all()).withSelfRel());
     }
 
     @PostMapping("/Items")

@@ -34,15 +34,12 @@ class GroceryStoreController {
     // Aggregate root
 
     @GetMapping("/GroceryStores")
-    CollectionModel<GroceryStore> all() {
+    CollectionModel<EntityModel<GroceryStore>> all() {
 
-    /*    List<EntityModel<GroceryStore>> Managers = repository.findAll()
+        List<EntityModel<GroceryStore>> groceryStores = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList()); */
-    	
-    	List<GroceryStore> groceryStores = new ArrayList<GroceryStore>();
-    	repository.findAll().forEach(g -> groceryStores.add(g));
+                .collect(Collectors.toList()); 
 
         return CollectionModel.of(groceryStores, linkTo(methodOn(GroceryStoreController.class).all()).withSelfRel());
     }

@@ -24,7 +24,7 @@ public class Manager {
 	 * public void setStoreId(int storeId) { this.storeId = storeId; }
 	 */
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue int id;
     private String firstName;
     private String lastName;
    // private int storeId;
@@ -59,7 +59,7 @@ public class Manager {
         this.lastName = parts[1];
     }
 
-    public Long getId() {
+    public int getId() {
         return this.id;
     }
 
@@ -72,7 +72,7 @@ public class Manager {
     }
 
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

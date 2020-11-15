@@ -3,8 +3,9 @@ package payroll.Customer;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
@@ -32,15 +33,12 @@ class CustomerItemController {
     // Aggregate root
 
     @GetMapping("/CustomerItems")
-    CollectionModel<CustomerItem> all() {
+    CollectionModel<EntityModel<CustomerItem>> all() {
 
-    /*    List<EntityModel<CustomerItem>> Managers = repository.findAll()
+       List<EntityModel<CustomerItem>> CustomerItems = repository.findAll()
                 .stream()
                 .map(assembler::toModel)
-                .collect(Collectors.toList()); */
-    	
-    	List<CustomerItem> CustomerItems = new ArrayList<CustomerItem>();
-    	repository.findAll().forEach(g -> CustomerItems.add(g));
+                .collect(Collectors.toList());
 
         return CollectionModel.of(CustomerItems, linkTo(methodOn(CustomerItemController.class).all()).withSelfRel());
     }

@@ -1,6 +1,6 @@
 package payroll.GroceryStore;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GroceryStoreRepository extends CrudRepository<GroceryStore, Long> {
+public interface GroceryStoreRepository extends JpaRepository<GroceryStore, Long> {
 }
